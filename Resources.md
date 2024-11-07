@@ -45,23 +45,7 @@ gcloud compute resource-policies create instance-schedule vm-shutdown \
 
 # CREATE cks-master VM using gcloud command
 # not necessary if created using the browser interface
-gcloud compute instances create cks-master --zone=europe-west2-c \
---resource-policies=vm-shutdown \
---machine-type=e2-medium \
---image=ubuntu-2004-focal-v20220419 \
---image-project=ubuntu-os-cloud \
---boot-disk-size=50GB
-
-# CREATE cks-worker VM using gcloud command
-# not necessary if created using the browser interface
-gcloud compute instances create cks-worker --zone=europe-west2-c \
---resource-policies=vm-shutdown \
---machine-type=e2-medium \
---image=ubuntu-2004-focal-v20220419 \
---image-project=ubuntu-os-cloud \
---boot-disk-size=50GB
-
-gcloud compute instances create cks-worker2 --zone=europe-west2-c \
+gcloud compute instances create cks-master cks-worker1 cks-worker2 --zone=europe-west2-c \
 --resource-policies=vm-shutdown \
 --machine-type=e2-medium \
 --image=ubuntu-2004-focal-v20220419 \
