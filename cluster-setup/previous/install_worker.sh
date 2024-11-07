@@ -5,6 +5,7 @@
 set -e
 
 source /etc/lsb-release
+VERSION_ID=$DISTRIB_RELEASE
 if [ "$DISTRIB_RELEASE" != "20.04" ]; then
     echo "################################# "
     echo "############ WARNING ############ "
@@ -148,7 +149,7 @@ version = 2
         NoPivotRoot = false
         Root = ""
         ShimCgroup = ""
-        SystemdCgroup = false
+        SystemdCgroup = true
 EOF
 
 
