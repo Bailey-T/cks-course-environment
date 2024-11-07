@@ -38,9 +38,15 @@ gcloud compute instances list # should be empty right now
 
 ### Practice - Create Kubeadm Cluster in GCP
 ```
+gcloud compute resource-policies create instance-schedule vm-shutdown \
+    --description='vm shutdown' \
+    --vm-stop-schedule='30 18 * * *'
+
+
 # CREATE cks-master VM using gcloud command
 # not necessary if created using the browser interface
-gcloud compute instances create cks-master --zone=europe-west3-c \
+gcloud compute instances create cks-master --zone=europe-west2-c \
+--resource-policies=vm-shutdown \
 --machine-type=e2-medium \
 --image=ubuntu-2004-focal-v20220419 \
 --image-project=ubuntu-os-cloud \
@@ -48,7 +54,15 @@ gcloud compute instances create cks-master --zone=europe-west3-c \
 
 # CREATE cks-worker VM using gcloud command
 # not necessary if created using the browser interface
-gcloud compute instances create cks-worker --zone=europe-west3-c \
+gcloud compute instances create cks-worker --zone=europe-west2-c \
+--resource-policies=vm-shutdown \
+--machine-type=e2-medium \
+--image=ubuntu-2004-focal-v20220419 \
+--image-project=ubuntu-os-cloud \
+--boot-disk-size=50GB
+
+gcloud compute instances create cks-worker2 --zone=europe-west2-c \
+--resource-policies=vm-shutdown \
 --machine-type=e2-medium \
 --image=ubuntu-2004-focal-v20220419 \
 --image-project=ubuntu-os-cloud \
@@ -57,6 +71,8 @@ gcloud compute instances create cks-worker --zone=europe-west3-c \
 # you can use a region near you
 https://cloud.google.com/compute/docs/regions-zones
 
+# cleanup VM's once finished:
+gcloud compute instances delete cks-master cks-worker cks-worker2
 
 # INSTALL cks-master
 gcloud compute ssh cks-master
